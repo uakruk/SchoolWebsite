@@ -1,6 +1,7 @@
 package ua.edu.kordelschool.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
@@ -24,6 +26,10 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    @Qualifier("myUserDetailsService")
+    private UserDetailsService userDetailsService;
 
     private final static String[] PERMITTED_ALL = {
             "/auth",
@@ -47,22 +53,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers(PERMITTED_ALL).permitAll()
-                .antMatchers(PERMITTED_ACTIVE).hasRole("USER")
-                .antMatchers(PERMITTED_AUTHENTICATED).hasRole("ADMIN") //todo rename array names
-                .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .loginProcessingUrl("appLogin")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/404")
-                .accessDeniedHandler(((httpServletRequest, httpServletResponse, e) -> httpServletResponse.sendRedirect("/404")))
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+//                .antMatchers(PERMITTED_ACTIVE).hasRole("USER")
+//                .antMatchers(PERMITTED_AUTHENTICATED).hasRole("ADMIN") //todo rename array names
+//                .and()
+//                .formLogin()
+//                .loginPage("/login").permitAll()
+//                .loginProcessingUrl("appLogin")
+//                .usernameParameter("email")
+//                .passwordParameter("password")
+//                .and()
+//                .exceptionHandling()
+//                .accessDeniedPage("/404")
+//                .accessDeniedHandler(((httpServletRequest, httpServletResponse, e) -> httpServletResponse.sendRedirect("/404")))
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .logoutSuccessUrl("/")
                 .and()
                 .csrf().disable();
     }
@@ -70,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(/*TODO create userDetailsService*/ null)
+                .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
