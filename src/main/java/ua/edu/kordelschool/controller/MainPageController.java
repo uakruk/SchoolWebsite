@@ -18,4 +18,9 @@ public class MainPageController {
     public String homePage() {
         return "index";
     }
+
+    @RequestMapping(value = "/gallery", method = RequestMethod.GET)
+    public String gallery() {
+        return "gallery";
+    }
 }
