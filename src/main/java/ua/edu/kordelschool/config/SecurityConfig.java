@@ -32,11 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     private final static String[] PERMITTED_ALL = {
-            "/auth",
-            "/auth/**",
-            "/activate/**",
-            "/404",
-            "/forgot/**",
+            "/**"
     };
 
     private final static String[] PERMITTED_AUTHENTICATED = {

@@ -112,14 +112,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			    <div class="clearfix"> </div>
 		</div>
 		<!----- //End-slider---->
-CommitsCode frequencyPunch cardNetworkMembers
-Saturday
-Friday
-Thursday
-Wednesday
-Tuesday
-Monday
-Sunday
+
 	<!----start-slide-bottom--->
 		<div class="slide-bottom">
 			<div class="slide-bottom-grids">
@@ -192,15 +185,15 @@ Sunday
 					   <p>Follow our Most Important News</p>
 					</div>
 			<div class="news">
-				<div class="col-md-4 test-right01 test1">
-					<img th:src="@{/images/n1.jpg}" class="img-responsive" alt="" />
+				<div class="col-md-4 test-right01 test1" th:each="article, iterationStatus : ${articles}">
+					<img th:src="@{'/images/n' + ${iterationStatus.count} + '.jpg'}" class="img-responsive" alt="" />
 						<div class="textbox textbox1">
-							<h4 class="col-md-4 date">14<br> <span>Jun</span><br><lable>0 <img src="images/comment.png" class="img-responsive" alt="" /></lable></h4>
-							<p class="col-md-8 news">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit...</p>
+                            <h4 class="col-md-4 date"> <span th:text="${article.getDate().get(calendar.DAY_OF_MONTH)}">14</span><br> <span th:text="${dateFormat.format(article.getDate().getTime())}">Jun</span><br><lable>0 <img src="images/comment.png" class="img-responsive" alt="" /></lable></h4>
+							<p class="col-md-8 news" th:text="${article.getCaption()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit...</p>
 								<div class="clearfix"> </div>
 						</div>
 				</div>
-				<div class="col-md-4 test-right01 test1">
+			<!--	<div class="col-md-4 test-right01 test1">
 					<img th:src="@{images/n2.jpg}" class="img-responsive" alt="" />
 						<div class="textbox textbox1">
 							<h4 class="col-md-4 date">15<br> <span>July</span><br><lable>0 <img src="images/comment.png" class="img-responsive" alt="" /></lable></h4>
@@ -215,7 +208,7 @@ Sunday
 							<p class="col-md-8 news">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit...</p>
 								<div class="clearfix"> </div>
 						</div>
-				</div>
+				</div> -->
 			<div class="clearfix"> </div>
 		</div>
 	</div>
