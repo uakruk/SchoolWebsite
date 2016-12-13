@@ -23,10 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestContext.class})
+@ContextConfiguration(classes = {TestContext.class, WebAppContext.class})
 @WebAppConfiguration
 public class ArticlesEndpointTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -45,13 +46,11 @@ public class ArticlesEndpointTest {
         Article added = new Article();
         dto.setAuthor("author");
         dto.setCaption("caption");
-        dto.setId(2L);
 
         when(articleServiceMock.createArticle(any(ArticleDto.class))).thenReturn(added);
 
-        mockMvc.perform(post("/add"))
+        mockMvc.perform(post("/article/add"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(2)))
                 .andExpect(jsonPath("$.author", is("author")))
                 .andExpect(jsonPath("$.caption", is("caption")));
 
