@@ -6,13 +6,11 @@ import ua.edu.kordelschool.dao.ArticleDao;
 import ua.edu.kordelschool.dto.ArticleDto;
 import ua.edu.kordelschool.dto.AttachmentDto;
 import ua.edu.kordelschool.entity.Article;
+import ua.edu.kordelschool.entity.ArticleType;
 import ua.edu.kordelschool.entity.Attachment;
 import ua.edu.kordelschool.entity.AttachmentType;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -33,6 +31,7 @@ public class ArticleService {
         article.setAuthor(articleDto.getAuthor());
         article.setCaption(articleDto.getCaption());
         article.setText(articleDto.getText());
+        article.setType(ArticleType.valueOf(articleDto.getType()));
 
         long currentTime = System.currentTimeMillis();
         Calendar calendar = Calendar.getInstance();
@@ -66,6 +65,7 @@ public class ArticleService {
         article.setText(articleDto.getText());
         article.setCaption(articleDto.getCaption());
         article.setAuthor(articleDto.getAuthor());
+        article.setType(ArticleType.valueOf(articleDto.getType()));
 
         Set<Attachment> attachments = article.getAttachments();
 
@@ -91,6 +91,33 @@ public class ArticleService {
 
     public List<Article> getAllArticles() {
 
-        return articleDao.getAll();
+        return articleDao.getAllArticles();
+    }
+
+    public List<Article> getAllEvents() {
+
+        return articleDao.getAllEvents();
+    }
+
+    public ArticleDto getArticleById(Long id) {
+        Article article = articleDao.read(id);
+
+        ArticleDto articleDto = new ArticleDto();
+        articleDto.setId(id);
+        articleDto.setCaption(article.getCaption());
+        if (article.getType() != null)
+            articleDto.setType(article.getType().name());
+        articleDto.setText(article.getText());
+        articleDto.setAuthor(article.getAuthor());
+
+        List<AttachmentDto> attachmentDtoList = new ArrayList<>();
+
+        article.getAttachments().stream()
+                .map(a -> new AttachmentDto(a.getAttachmentPath(), a.getType().name()))
+                .map(attachmentDtoList::add);
+
+        articleDto.setAttachments(attachmentDtoList);
+
+        return articleDto;
     }
 }

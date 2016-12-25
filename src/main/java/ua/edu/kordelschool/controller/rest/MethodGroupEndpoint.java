@@ -4,52 +4,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.kordelschool.dto.ArticleDto;
-import ua.edu.kordelschool.entity.Article;
-import ua.edu.kordelschool.service.ArticleService;
+import ua.edu.kordelschool.entity.MethodGroup;
+import ua.edu.kordelschool.service.MethodGroupService;
 
 /**
- * @author Yaroslav Kruk on 12/11/16.
+ * @author Yaroslav Kruk on 12/25/16.
  *         e-mail: yakruck@gmail.com
  *         GitHub: https://github.com/uakruk
  * @version 1.0
  * @since 1.8
  */
 @RestController
-@RequestMapping("/article")
-public class ArticlesEndpoint {
+@RequestMapping("/group")
+public class MethodGroupEndpoint {
 
     @Autowired
-    private ArticleService articleService;
+    private MethodGroupService methodGroupService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArticleDto createArticle(@RequestBody ArticleDto articleDto) {
-        Article article = articleService.createArticle(articleDto);
+                   produces = MediaType.APPLICATION_JSON_VALUE)
+    public MethodGroup addMethodGroup(@RequestBody MethodGroup methodGroup) {
 
-        articleDto.setId(article.getId());
-
-        return articleDto;
+        return methodGroupService.createMethodGroup(methodGroup);
     }
+
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArticleDto editArticle(@RequestBody ArticleDto articleDto) {
-        Article article = articleService.editArticle(articleDto);
+    public MethodGroup editMethodGroup(@RequestBody MethodGroup methodGroup) {
 
-        return articleDto;
+        return methodGroupService.editMethodGroup(methodGroup);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> removeArticle(@PathVariable Long id) {
-        articleService.removeArticle(id);
+    public ResponseEntity<String> removeMethodGroup(@PathVariable Long id) {
+        methodGroupService.removeMethodGroup(id);
 
         return ResponseEntity.ok("removed");
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArticleDto getArticle(@PathVariable Long id) {
+    public MethodGroup getMethodGroupById(@PathVariable Long id) {
 
-        return articleService.getArticleById(id);
+        return methodGroupService.getMethodGroup(id);
     }
 }

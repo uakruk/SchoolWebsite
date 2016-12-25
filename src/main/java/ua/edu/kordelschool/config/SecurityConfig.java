@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+//import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 /**
  * @author Yaroslav Kruk on 12/8/16.
@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(20);
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -87,8 +87,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public SpringSecurityDialect springSecurityDialect() {
-        return new SpringSecurityDialect();
-    }
+//    @Bean
+//    public SpringSecurityDialect springSecurityDialect() {
+//        return new SpringSecurityDialect();
+//    }
 }
