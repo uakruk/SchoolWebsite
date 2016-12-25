@@ -11,6 +11,7 @@ import ua.edu.kordelschool.service.ArticleService;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Yaroslav Kruk on 12/8/16.
@@ -29,7 +30,7 @@ public class MainPageController {
     public String homePage(Model model) {
 
         List<Article> articles = articleService.getAllArticles();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM", new Locale("uk", "UA"));
 
         model.addAttribute("articles", articles);
         model.addAttribute("calendar", Calendar.getInstance());
