@@ -17,7 +17,8 @@ import ua.edu.kordelschool.KodreslchoolApplication;
  * @since 1.8
  */
 @Configuration
-@ComponentScan(basePackageClasses = {KodreslchoolApplication.class},
+@ComponentScan(value = {"ua.edu.kordelschool"},
+                basePackageClasses = {KodreslchoolApplication.class},
                 excludeFilters = @ComponentScan.Filter({
                         Controller.class, Configuration.class, ControllerAdvice.class, RestController.class
                 }))
