@@ -70,14 +70,33 @@ label{
   float: right;
   margin-top: 1.4em;
 }
+
+.slide-menu {
+    float: left;
+    left: 10px;
+    margin-top: 1.4em;
+}
+
 .top-menu ul{
 	margin:0;
 	padding:0;
 }
+
+.slide-menu ul {
+    margin: 0;
+    padding: 0;
+}
+
 .top-menu li {		
 	text-transform:uppercase;
 	display:inline-block;
 	  margin-right: 2em;
+}
+
+.slide-menu li {
+    text-transform: uppercase;
+    display: block;
+    margin-left: 2em;
 }
 .top-menu li a{
 	color:#FFFFFF;
@@ -86,10 +105,23 @@ label{
 	padding:0;
 	font-weight:400;
 	font-size:1em;
-}	
+}
+
+.slide-menu li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    display: block;
+    padding: 0;
+    font-weight: 400;
+    font-size: 1em;
+}
 .top-menu li a.active{
   color: #fff200;
   }
+
+.slide-menu li a.active {
+    color: #FFF200;
+}
 /* Effect 16: fall down */
 .cl-effect-16 a {
 	text-shadow: 0 0 1px rgba(111,134,134,0.3);
