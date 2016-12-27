@@ -4,10 +4,13 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 import ua.edu.kordelschool.KodreslchoolApplication;
+
+import java.io.IOException;
 
 /**
  * @author Yaroslav Kruk on 12/8/16.
@@ -24,10 +27,10 @@ import ua.edu.kordelschool.KodreslchoolApplication;
                 }))
 public class ApplicationConfig {
 
-    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
+    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
         PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
         ppc.setIgnoreUnresolvablePlaceholders(true);
-        ppc.setLocation(new ClassPathResource("application.properties"));
+        ppc.setLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/**.properties"));
 
         return ppc;
     }

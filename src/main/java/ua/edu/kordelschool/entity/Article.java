@@ -38,6 +38,13 @@ public class Article {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private ArticleType type;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
+    private List<Comment> comments;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "article_attachments",
                 joinColumns = {@JoinColumn(name = "article_id")},
@@ -90,5 +97,21 @@ public class Article {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public ArticleType getType() {
+        return type;
+    }
+
+    public void setType(ArticleType type) {
+        this.type = type;
     }
 }

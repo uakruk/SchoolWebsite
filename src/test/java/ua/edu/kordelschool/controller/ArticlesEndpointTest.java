@@ -27,8 +27,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -78,9 +76,7 @@ public class ArticlesEndpointTest {
         articleDto.setText("text added");
         articleDto.setId(1L);
         List<AttachmentDto> attachments = new ArrayList<>();
-        AttachmentDto attachmentDto = new AttachmentDto();
-        attachmentDto.setUri("someAdded.img");
-        attachmentDto.setType(AttachmentType.IMAGE.toString());
+        AttachmentDto attachmentDto = new AttachmentDto("someAdded.img", AttachmentType.IMAGE.toString());
         attachments.add(attachmentDto);
         articleDto.setAttachments(attachments);
         articleService.createArticle(articleDto);

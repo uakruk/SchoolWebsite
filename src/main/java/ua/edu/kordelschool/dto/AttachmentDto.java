@@ -28,4 +28,9 @@ public class AttachmentDto {
     public void setType(String type) {
         this.type = type;
     }
+
+    public AttachmentDto(String uri, String type) {
+        this.uri = uri;
+        this.type = type;
+    }
 }

@@ -42,9 +42,7 @@ public class ArticlesEndpoint {
             List<AttachmentDto> attachmentDtos = new ArrayList<>();
             Set<Attachment> attachments = article.getAttachments();
             attachments.stream().map(attachment ->  {
-                AttachmentDto attachmentDto = new AttachmentDto();
-                attachmentDto.setType(attachment.getType().toString());
-                attachmentDto.setUri(attachment.getAttachmentPath());
+                AttachmentDto attachmentDto = new AttachmentDto(attachment.getAttachmentPath(), attachment.getType().toString());
                 return attachmentDtos.add(attachmentDto);
             });
             articleDto.setAttachments(attachmentDtos);
@@ -76,5 +74,11 @@ public class ArticlesEndpoint {
         articleService.removeArticle(id);
 
         return ResponseEntity.ok("removed");
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArticleDto getArticle(@PathVariable Long id) {
+
+        return articleService.getArticleById(id);
     }
 }

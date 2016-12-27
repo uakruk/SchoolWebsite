@@ -13,5 +13,7 @@ import java.util.List;
  */
 public interface ArticleDao extends CRUD<Article> {
 
-    List<Article> getAll();
+    List<Article> getAllArticles();
+
+    List<Article> getAllEvents();
 }
