@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.edu.kordelschool.KodreslchoolApplication;
+import ua.edu.kordelschool.dto.ArticleDto;
+import ua.edu.kordelschool.dto.AttachmentDto;
 import ua.edu.kordelschool.entity.Article;
 import ua.edu.kordelschool.entity.Attachment;
 import ua.edu.kordelschool.entity.AttachmentType;
@@ -23,10 +25,10 @@ import ua.edu.kordelschool.service.ArticleService;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
+import java.util.*;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -45,6 +47,8 @@ public class ArticlesEndpointTest {
     private MockMvc mockMvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    private ArticleDto articleDto;
 
     @Autowired
     private ArticleService articleService;
@@ -67,6 +71,19 @@ public class ArticlesEndpointTest {
     @Before
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        articleDto = new ArticleDto();
+        articleDto.setCaption("caption added");
+        articleDto.setAuthor("author added");
+        articleDto.setText("text added");
+        articleDto.setId(1L);
+        List<AttachmentDto> attachments = new ArrayList<>();
+        AttachmentDto attachmentDto = new AttachmentDto();
+        attachmentDto.setUri("someAdded.img");
+        attachmentDto.setType(AttachmentType.IMAGE.toString());
+        attachments.add(attachmentDto);
+        articleDto.setAttachments(attachments);
+        articleService.createArticle(articleDto);
     }
 
     @Test
@@ -90,10 +107,23 @@ public class ArticlesEndpointTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void editArticleTest() {
+//    @Test
+//    public void getAllArticlesTest() throws Exception {
+//        mockMvc.perform(get("/article/getAll"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(1)))
+//                .andExpect(content().contentType(contentType))
+//                .andExpect(jsonPath("$[0].id", is(articleDto.getId())))
+//                .andExpect(jsonPath("$[0].caption", is(articleDto.getCaption())))
+//                .andExpect(jsonPath("$[0].author", is(articleDto.getAuthor())))
+//                .andExpect(jsonPath("$[0].text", is(articleDto.getText())))
+//                .andExpect(jsonPath("$[0].attachments", hasSize(1)));
+//    }
 
-    }
+//    @Test
+//    public void editArticleTest() {
+//
+//    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();

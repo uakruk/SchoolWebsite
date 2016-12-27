@@ -5,8 +5,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.kordelschool.dto.ArticleDto;
+import ua.edu.kordelschool.dto.AttachmentDto;
 import ua.edu.kordelschool.entity.Article;
+import ua.edu.kordelschool.entity.Attachment;
 import ua.edu.kordelschool.service.ArticleService;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Yaroslav Kruk on 12/11/16.
@@ -21,6 +28,30 @@ public class ArticlesEndpoint {
 
     @Autowired
     private ArticleService articleService;
+
+    @RequestMapping(value="/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Collection<ArticleDto> getAllArticles() {
+        Collection<ArticleDto> articlesDto = new ArrayList<>();
+        List<Article> articles = articleService.getAllArticles();
+        articles.stream().map(article -> {
+            ArticleDto articleDto = new ArticleDto();
+            articleDto.setCaption(article.getCaption());
+            articleDto.setAuthor(article.getAuthor());
+            articleDto.setId(article.getId());
+            articleDto.setText(article.getText());
+            List<AttachmentDto> attachmentDtos = new ArrayList<>();
+            Set<Attachment> attachments = article.getAttachments();
+            attachments.stream().map(attachment ->  {
+                AttachmentDto attachmentDto = new AttachmentDto();
+                attachmentDto.setType(attachment.getType().toString());
+                attachmentDto.setUri(attachment.getAttachmentPath());
+                return attachmentDtos.add(attachmentDto);
+            });
+            articleDto.setAttachments(attachmentDtos);
+            return articlesDto.add(articleDto);
+        });
+        return articlesDto;
+    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
                     produces = MediaType.APPLICATION_JSON_VALUE)
