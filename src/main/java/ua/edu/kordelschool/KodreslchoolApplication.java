@@ -8,7 +8,7 @@ import ua.edu.kordelschool.utils.AppInfo;
 public class KodreslchoolApplication {
 
 	public static void main(String[] args) {
-		System.out.println(AppInfo.PROJECT_VERSION);
 		SpringApplication.run(KodreslchoolApplication.class, args);
+		System.out.println("App version: "+AppInfo.PROJECT_VERSION);
 	}
 }
