@@ -1,6 +1,6 @@
 # SchoolWebsite
-Kordelivka school website
-<b>installing:</b>
-mvn install
-<b>running:</b>
-mvn exec:java
+Kordelivka school website<br>
+<b>installing:</b><br>
+mvn install<br>
+<b>running:</b><br>
+mvn exec:java<br>
