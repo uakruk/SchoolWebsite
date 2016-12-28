@@ -18,9 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.edu.kordelschool.KodreslchoolApplication;
 import ua.edu.kordelschool.dto.ArticleDto;
 import ua.edu.kordelschool.dto.AttachmentDto;
-import ua.edu.kordelschool.entity.Article;
-import ua.edu.kordelschool.entity.Attachment;
-import ua.edu.kordelschool.entity.AttachmentType;
+import ua.edu.kordelschool.entity.*;
 import ua.edu.kordelschool.service.ArticleService;
 
 import java.io.IOException;
@@ -71,6 +69,7 @@ public class ArticlesEndpointTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         articleDto = new ArticleDto();
+        articleDto.setType(ArticleType.ARTICLE.toString());
         articleDto.setCaption("caption added");
         articleDto.setAuthor("author added");
         articleDto.setText("text added");
@@ -84,42 +83,22 @@ public class ArticlesEndpointTest {
 
     @Test
     public void createArticleTest() throws Exception {
-        Article article = new Article();
-        article.setCaption("caption");
-        article.setAuthor("author");
-        article.setText("text");
-        article.setId(0L);
-        article.setDate(new GregorianCalendar());
-        HashSet<Attachment> attachments = new HashSet<>();
-        Attachment attachment = new Attachment("someGoogle.img", AttachmentType.IMAGE);
-        attachment.setId(0L);
-        attachments.add(attachment);
-        article.setAttachments(attachments);
-        String articleJson = json(article);
-
-        mockMvc.perform(post("/article/add")
-                .contentType(contentType)
-                .content(articleJson))
-                .andExpect(status().isOk());
-    }
-
-//    @Test
-//    public void getAllArticlesTest() throws Exception {
-//        mockMvc.perform(get("/article/getAll"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(1)))
-//                .andExpect(content().contentType(contentType))
-//                .andExpect(jsonPath("$[0].id", is(articleDto.getId())))
-//                .andExpect(jsonPath("$[0].caption", is(articleDto.getCaption())))
-//                .andExpect(jsonPath("$[0].author", is(articleDto.getAuthor())))
-//                .andExpect(jsonPath("$[0].text", is(articleDto.getText())))
-//                .andExpect(jsonPath("$[0].attachments", hasSize(1)));
-//    }
-
-//    @Test
-//    public void editArticleTest() {
+//        ArticleDto article = new ArticleDto();
+//        article.setType(ArticleType.ARTICLE.toString());
+//        article.setCaption("caption");
+//        article.setAuthor("author");
+//        article.setText("text");
+//        LinkedList<AttachmentDto> attachments = new LinkedList<>();
+//        AttachmentDto attachment = new AttachmentDto("someGoogle.img", AttachmentType.IMAGE.toString());
+//        attachments.add(attachment);
+//        article.setAttachments(attachments);
+//        String articleJson = json(article);
 //
-//    }
+//        mockMvc.perform(post("/article/add")
+//                .contentType(contentType)
+//                .content(articleJson))
+//                .andExpect(status().isOk());
+    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
