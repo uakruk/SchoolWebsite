@@ -1,0 +1,21 @@
+// Created by uakruk on 12/28/16.
+#login.modal(role="dialog")
+    .modal-dialog
+        .modal-content
+            .container
+                .row
+                    .login-panel.panel.panel-default
+                        .panel-heading
+                            h3.panel-title Будь ласка, увійдіть
+                        .panel-body
+                            form(role="form")
+                                fieldset
+                                    .form-group
+                                        input.form-control(name="E-mail", type="email", placeholder="E-mail", autofocus)
+                                    .form-group
+                                        input.form-control(name="password", type="password", value="", placeholder="Пароль")
+                                    .checkbox
+                                        label
+                                            input(name="remember", type="checkbox", value="Remember Me")
+                                            | Залишатися у системі
+                                    input.btn.btn-lg.btn-success.btn-block(type="submit") Увійти
