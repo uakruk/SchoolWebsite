@@ -33,4 +33,6 @@ public class AttachmentDto {
         this.uri = uri;
         this.type = type;
     }
+
+    public AttachmentDto() {}
 }

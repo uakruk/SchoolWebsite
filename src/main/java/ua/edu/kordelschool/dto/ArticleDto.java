@@ -23,6 +23,8 @@ public class ArticleDto {
 
     private String type;
 
+    private List<CommentDto> comments;
+
     public String getCaption() {
         return caption;
     }
@@ -69,5 +71,13 @@ public class ArticleDto {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<CommentDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDto> comments) {
+        this.comments = comments;
     }
 }

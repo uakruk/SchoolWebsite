@@ -18,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.edu.kordelschool.KodreslchoolApplication;
 import ua.edu.kordelschool.dto.ArticleDto;
 import ua.edu.kordelschool.dto.AttachmentDto;
+import ua.edu.kordelschool.dto.CommentDto;
 import ua.edu.kordelschool.entity.*;
 import ua.edu.kordelschool.service.ArticleService;
 
@@ -68,36 +69,46 @@ public class ArticlesEndpointTest {
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        articleDto = new ArticleDto();
-        articleDto.setType(ArticleType.ARTICLE.toString());
-        articleDto.setCaption("caption added");
-        articleDto.setAuthor("author added");
-        articleDto.setText("text added");
-        articleDto.setId(1L);
-        List<AttachmentDto> attachments = new ArrayList<>();
-        AttachmentDto attachmentDto = new AttachmentDto("someAdded.img", AttachmentType.IMAGE.toString());
-        attachments.add(attachmentDto);
-        articleDto.setAttachments(attachments);
-        articleService.createArticle(articleDto);
+//        articleDto = new ArticleDto();
+//        articleDto.setType(ArticleType.ARTICLE.toString());
+//        articleDto.setCaption("caption added");
+//        articleDto.setAuthor("author added");
+//        articleDto.setText("text added");
+//        articleDto.setId(1L);
+//        List<AttachmentDto> attachments = new ArrayList<>();
+//        AttachmentDto attachmentDto = new AttachmentDto("someAdded.img", AttachmentType.IMAGE.name());
+//        attachments.add(attachmentDto);
+//        articleDto.setAttachments(attachments);
+//        articleService.createArticle(articleDto);
     }
 
     @Test
     public void createArticleTest() throws Exception {
-//        ArticleDto article = new ArticleDto();
-//        article.setType(ArticleType.ARTICLE.toString());
-//        article.setCaption("caption");
-//        article.setAuthor("author");
-//        article.setText("text");
-//        LinkedList<AttachmentDto> attachments = new LinkedList<>();
-//        AttachmentDto attachment = new AttachmentDto("someGoogle.img", AttachmentType.IMAGE.toString());
-//        attachments.add(attachment);
-//        article.setAttachments(attachments);
-//        String articleJson = json(article);
-//
-//        mockMvc.perform(post("/article/add")
-//                .contentType(contentType)
-//                .content(articleJson))
-//                .andExpect(status().isOk());
+        ArticleDto article = new ArticleDto();
+        article.setType(ArticleType.ARTICLE.toString());
+        article.setCaption("caption");
+        article.setAuthor("author");
+        article.setText("text");
+        LinkedList<AttachmentDto> attachments = new LinkedList<>();
+        AttachmentDto attachment = new AttachmentDto("someGoogle.img", AttachmentType.IMAGE.name());
+        attachments.add(attachment);
+
+        List<CommentDto> comments = new ArrayList<>();
+
+        CommentDto comment = new CommentDto();
+        comment.setAuthor("admin");
+        comment.setText("text");
+
+        comments.add(comment);
+
+        article.setComments(comments);
+        article.setAttachments(attachments);
+        String articleJson = json(article);
+
+        mockMvc.perform(post("/article/add")
+                .contentType(contentType)
+                .content(articleJson))
+                .andExpect(status().isOk());
     }
 
     protected String json(Object o) throws IOException {

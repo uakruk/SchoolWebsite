@@ -28,6 +28,11 @@ public class Comment {
     @ManyToOne
     private Article article;
 
+    public Comment(String author, String text) {
+        this.author = author;
+        this.text = text;
+    }
+
     public Long getId() {
         return id;
     }
