@@ -7,5 +7,8 @@ package ua.edu.kordelschool.entity;
  * @version 1.0
  * @since 1.8
  */
-public class TaskType {
+public enum TaskType {
+    OPEN,
+    CHECKBOX,
+    OPTION
 }

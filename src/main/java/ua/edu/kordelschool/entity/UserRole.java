@@ -7,5 +7,10 @@ package ua.edu.kordelschool.entity;
  * @version 1.0
  * @since 1.8
  */
-public class UserRole {
+public enum UserRole {
+    ADMIN,
+    STUDENT,
+    TEACHER,
+    ACTIVE,
+    INACTIVE
 }

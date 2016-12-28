@@ -30,158 +30,158 @@ html
             script(src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
             script(src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
         // [endif]
+    body
+        #wrapper
+            // navigation
+            nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0;")
+                .navbar-header
+                    button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+                        span.sr-only Показати/сховати меню
+                        span.icon-bar
+                        span.icon-bar
+                        sapn.icon-bar
+                    a.navbar-brand(href="/") Мій кабінет
 
-    #wrapper
-        // navigation
-        nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0;")
-            .navbar-header
-                button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
-                    span.sr-only Показати/сховати меню
-                    span.icon-bar
-                    span.icon-bar
-                    sapn.icon-bar
-                a.navbar-brand(href="/") Мій кабінет
-
-            ul.nav.navbar-top-links.navbar-right
-                // messages
-                li.dropdown
-                    a.dropdown-toggle(data-toggle="dropdown", href="#")
-                        i.fa.fa-envelope.fa-fw
-                        i.fa.fa-caret-down
-                    ul.dropdown-menu.dropdown-messages
-                        block messages-top
+                ul.nav.navbar-top-links.navbar-right
+                    // messages
+                    li.dropdown
+                        a.dropdown-toggle(data-toggle="dropdown", href="#")
+                            i.fa.fa-envelope.fa-fw
+                            i.fa.fa-caret-down
+                        ul.dropdown-menu.dropdown-messages
+                            block messages-top
+                                li
+                                    a(href="#")
+                                        div
+                                            strong John Smith
+                                            span.pull-right.text-muted
+                                                em Yesterday
+                                        div
+                                            | message text goes here...
+                                li.divider
+                            // end of list of messages
                             li
-                                a(href="#")
-                                    div
-                                        strong John Smith
-                                        span.pull-right.text-muted
-                                            em Yesterday
-                                    div
-                                        | message text goes here...
+                                a.text-center(href="#")
+                                    strong Переглянути всі повідомлення
+                                    i.fa.fa-angle-right
+                    // tasks
+                    li.dropdown
+                        a.dropdown-toggle(data-toggle="dropdown", href="#")
+                            i.fa.fa-tasks.fa-fw
+                            i.fa.fa-caret-down
+                        ul.dropdown-menu.dropdown-tasks
+                            block tasks-top
+                                li
+                                    a(href="#")
+                                        div
+                                            p
+                                                strong Task 1
+                                                span.pull-right.text-muted 40% Complete
+                                            .progress.progress-striped.active
+                                                .progress-bar.progress-bar-success(role="progressbar", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width: 40%")
+                                                    span.sr-only 40% complete (success)
+                                li.divider
+                            li
+                                a.text-center(href="#")
+                                    strong Переглянути всі завдання
+                                    i.fa.fa-angle-right
+                    // alerts (notifications)
+                    li.dropdown
+                        a.dropdown-toggle(data-toggle="dropdown", href="#")
+                            i.fa.fa-bell.fa-fw
+                            i.fa.fa-caret-down
+                        ul.dropdown-menu.dropdown-alerts
+                            block alerts-top
+                                li
+                                    a(href="#")
+                                        div
+                                            i.fa.fa-comment.fa-fw New Comment
+                                            span.pull-right.text-muted.small 4 minutes ago
+                                li.divider
+                            li
+                                a.text-center(href="#")
+                                    strong Переглянути всі нотифікації
+                                    i.fa.fa-angle-right
+                    // profile settings
+                    li.dropdown
+                        a.dropdown-toggle(data-toggle="dropdown", href="#")
+                            i.fa.fa-user.fa-fw
+                            i.fa.fa-caret-down
+                        ul.dropdown-menu.dropdown-user
+                            li
+                                a(href="/profile")
+                                    i.fa.fa-user.fa-fw
+                                    | Профіль
+                            li
+                                a(href="/settings")
+                                    i.fa.fa-gear.fa-fw
+                                    | Налаштування
                             li.divider
-                        // end of list of messages
-                        li
-                            a.text-center(href="#")
-                                strong Переглянути всі повідомлення
-                                i.fa.fa-angle-right
-                // tasks
-                li.dropdown
-                    a.dropdown-toggle(data-toggle="dropdown", href="#")
-                        i.fa.fa-tasks.fa-fw
-                        i.fa.fa-caret-down
-                    ul.dropdown-menu.dropdown-tasks
-                        block tasks-top
                             li
-                                a(href="#")
-                                    div
-                                        p
-                                            strong Task 1
-                                            span.pull-right.text-muted 40% Complete
-                                        .progress.progress-striped.active
-                                            .progress-bar.progress-bar-success(role="progressbar", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width: 40%")
-                                                span.sr-only 40% complete (success)
-                            li.divider
-                        li
-                            a.text-center(href="#")
-                                strong Переглянути всі завдання
-                                i.fa.fa-angle-right
-                // alerts (notifications)
-                li.dropdown
-                    a.dropdown-toggle(data-toggle="dropdown", href="#")
-                        i.fa.fa-bell.fa-fw
-                        i.fa.fa-caret-down
-                    ul.dropdown-menu.dropdown-alerts
-                        block alerts-top
-                            li
-                                a(href="#")
-                                    div
-                                        i.fa.fa-comment.fa-fw New Comment
-                                        span.pull-right.text-muted.small 4 minutes ago
-                            li.divider
-                        li
-                            a.text-center(href="#")
-                                strong Переглянути всі нотифікації
-                                i.fa.fa-angle-right
-                // profile settings
-                li.dropdown
-                    a.dropdown-toggle(data-toggle="dropdown", href="#")
-                        i.fa.fa-user.fa-fw
-                        i.fa.fa-caret-down
-                    ul.dropdown-menu.dropdown-user
-                        li
-                            a(href="/profile")
-                                i.fa.fa-user.fa-fw
-                                | Профіль
-                        li
-                            a(href="/settings")
-                                i.fa.fa-gear.fa-fw
-                                | Налаштування
-                        li.divider
-                        li
-                            a(href="/logout")
-                                i.fa.fa-sign-out.fa-fw
-                                | Вийти
-            // side-menu
-            .navbar-default.sidebar(role="navigation")
-                .sidebar-nav.navbar-collapse
-                    ul.nav#side-menu
-                        li.sidebar-search
-                            // need this?
-                            .input-group.custom-search-form
-                                input.form-control(type="text", placeholder="Пошук...")
-                                span.input-group-btn
-                                    button.btn.btn-default(type="button")
-                                        i.fa.fa-search
-                        block side-menu
-                            li.active
-                                a(href="/")
-                                    i.fa.fa-dashboard.fa-fw
-                                    |   Кабінет
-                            li
-                                a(href="/diary")
-                                    i.fa.fa-calendar.fa-fw
-                                    |  Щоденник
-                            //
-                                span.fa.arrow
-                                ul.nav.nav-second-level
-                                    li
-                                        a(href="/tasks") Завдання
-                                    li
-                            li
-                                a(href="/tasks")
-                                    i.fa.fa-tasks.fa-fw
-                                    |  Завдання
-                            li
-                                a(href="/friends")
-                                    i.fa.fa-male.fa-fw(style="display: inline;")
-                                    i.fa.fa-female.fa-fw(style="display: inline; ")
-                                    | Однокласники
-                            li
-                                a(href="/teachers")
-                                    span.glyphicon.glyphicon-education
-                                    |  Вчителі
-                            li
-                                a(href="/messages")
-                                    i.fa.fa-envelope-o.fa-fw
-                                    |  Повідомлення
+                                a(href="/logout")
+                                    i.fa.fa-sign-out.fa-fw
+                                    | Вийти
+                // side-menu
+                .navbar-default.sidebar(role="navigation")
+                    .sidebar-nav.navbar-collapse
+                        ul.nav#side-menu
+                            li.sidebar-search
+                                // need this?
+                                .input-group.custom-search-form
+                                    input.form-control(type="text", placeholder="Пошук...")
+                                    span.input-group-btn
+                                        button.btn.btn-default(type="button")
+                                            i.fa.fa-search
+                            block side-menu
+                                li.active
+                                    a(href="/")
+                                        i.fa.fa-dashboard.fa-fw
+                                        |   Кабінет
+                                li
+                                    a(href="/diary")
+                                        i.fa.fa-calendar.fa-fw
+                                        |  Щоденник
+                                //
+                                    span.fa.arrow
+                                    ul.nav.nav-second-level
+                                        li
+                                            a(href="/tasks") Завдання
+                                        li
+                                li
+                                    a(href="/tasks")
+                                        i.fa.fa-tasks.fa-fw
+                                        |  Завдання
+                                li
+                                    a(href="/friends")
+                                        i.fa.fa-male.fa-fw(style="display: inline;")
+                                        i.fa.fa-female.fa-fw(style="display: inline; ")
+                                        | Однокласники
+                                li
+                                    a(href="/teachers")
+                                        span.glyphicon.glyphicon-education
+                                        |  Вчителі
+                                li
+                                    a(href="/messages")
+                                        i.fa.fa-envelope-o.fa-fw
+                                        |  Повідомлення
 
-        // page content
-        #page-wrapper
-            .container-fluid
-                .row
-                    .col-lg-12
-                        h1.page-header
-                            if title
-                                | #{title}
-                            | - Кабінет
-    // jQuery
-    script(src="/vendor/jquery/jquery.min.js")
+            // page content
+            #page-wrapper
+                .container-fluid
+                    .row
+                        .col-lg-12
+                            h1.page-header
+                                if title
+                                    | #{title}
+                                | - Кабінет
+        // jQuery
+        script(src="/vendor/jquery/jquery.min.js")
 
-    // Bootstrap Core JavaScript
-    script(src="/vendor/bootstrap/js/bootstrap.min.js")
+        // Bootstrap Core JavaScript
+        script(src="/vendor/bootstrap/js/bootstrap.min.js")
 
-    // Metis Menu Plugin JavaScript
-    script(src="/vendor/metisMenu/metisMenu.min.js")
+        // Metis Menu Plugin JavaScript
+        script(src="/vendor/metisMenu/metisMenu.min.js")
 
-    // Custom theme JavaScript
-    script(src="/dist/js/sb-admin-2.js")
+        // Custom theme JavaScript
+        script(src="/dist/js/sb-admin-2.js")
