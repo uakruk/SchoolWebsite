@@ -156,7 +156,11 @@
 			<artifactId>exec-maven-plugin</artifactId>
 			<version>1.2.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-pmd-plugin</artifactId>
+			<version>3.7</version>
+		</dependency>
 
 	</dependencies>
 
@@ -165,6 +169,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.7</version>
+				<configuration>
+					<rulesets>
+						<ruleset>rulesets/java/basic.xml</ruleset>
+					</rulesets>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
