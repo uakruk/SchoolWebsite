@@ -4,11 +4,9 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 ADD . /usr/src/app
-#############################
-RUN service start postgres
-#############################
-RUN mvn install
 
-EXPOSE 5000
+#RUN mvn install
+
+EXPOSE 8080
 
 #CMD ["mvn", "exec:java"]
