@@ -9,8 +9,11 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.*;
 import ua.edu.kordelschool.entity.Activity;
+import ua.edu.kordelschool.entity.Article;
+import ua.edu.kordelschool.entity.ArticleType;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,7 +23,21 @@ public class DaoTests {
     @Autowired
     private ActivityDao activityDao;
 
+    @Autowired
+    private ArticleDao articleDao;
+
     private Activity activity;
+
+    private Article article;
+
+    private void createArticle() {
+        article = new Article();
+        article.setAuthor("Article author");
+        article.setCaption("some caption");
+        article.setText("lorem");
+        article.setType(ArticleType.ARTICLE);
+        article.setDate(Calendar.getInstance());
+    }
 
     private void createActivity() {
         activity = new Activity();
@@ -32,6 +49,7 @@ public class DaoTests {
     @Before
     public void setUp() {
         createActivity();
+        createArticle();
     }
 
     @Test
@@ -60,5 +78,32 @@ public class DaoTests {
         //delete
         activityDao.delete(activity.getId());
         assertThat(activityDao.read(activity.getId())).isNull();
+    }
+
+    @Test
+    @Rollback
+    @Transactional
+    public void testArticlesCRUD() {
+        // create
+        Article response = articleDao.create(article);
+
+        assertThat(response.getType()).isEqualTo(ArticleType.ARTICLE);
+
+        assertThat(response.getId()).isNotNull();
+        assertThat(response.getId()).isEqualTo(article.getId());
+        // read
+        response = articleDao.read(article.getId());
+
+        assertThat(response).isNotNull();
+        assertThat(response).isEqualTo(article);
+
+        //update
+        article.setType(ArticleType.EVENT);
+        response = articleDao.update(article);
+        assertThat(response.getType()).isEqualTo(ArticleType.EVENT);
+
+        //delete
+        articleDao.delete(article.getId());
+        assertThat(articleDao.read(article.getId())).isNull();
     }
 }
