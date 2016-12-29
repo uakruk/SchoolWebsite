@@ -1,0 +1,192 @@
+// Created by uakruk on 12/25/16.
+html
+    head
+        title
+            block title
+                | Корделівська СЗШ
+                if title
+                    | - #{title}
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+        meta(name="keywords" ,content="Kordelschool")
+        script(type="application/x-javascript") addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);function hideURLbar(){ window.scrollTo(0,1); }
+        link(rel="stylesheet", type="text/css", href="/css/bootstrap.css")
+        link(rel="stylesheet", type="text/css", href="/css/style.css")
+        script(src="/js/jquery.min.js")
+        link(href='http://fonts.googleapis.com/css?family=Arvo:400,700,400italic|PT+Sans:400,700,400italic,700italic'
+        rel='stylesheet', type='text/css')
+    body
+        #home.header
+            .top-header
+                .container
+                    .logo
+                        a(href="/")
+                            h1 Корделівська
+                                span СЗШ
+                    .top-menu
+                        span.menu
+                        ul.cl-effect-16
+                            li
+                                a(href="/", data-hover="Домашня").active Домашня
+                            li
+                                a(href="/about", data-hover="Про нас") Про нас
+                            li
+                                a(href="/teachers", data-hover="Вчителі") Вчителі
+                            li
+                                a(href="/gallery", data-hover="Галерея") Галерея
+                            li
+                                a(href="/methods", data-hover="Методичні об'єднання") Методичні об'єднання
+                            li
+                                a(href="/contact", data-hover="Контакти") Контакти
+                            .clearfix
+                    // script for menu
+                    script(src="/js/span-menu.js")
+
+                    .clearfix
+            // banner slider starts here
+            script(src="/js/responsiveslides.min.js")
+            script(src="/js/respoonsive-slide.js")
+            // slideshow 4
+            #top.callbacks_container
+                ul#slider4.rslides
+                    for slogan in slogans
+                        li
+                            .slider-top
+                                h2 #{slogan.caption}
+                                p #{slogan.text}
+                                h6 #{slogan.end}
+            .clearfix
+        // start slide bottom
+        .slide-bottom
+            .slide-bottom-grids
+                .container
+                    .col-md-6.slide-bottom-grid
+                        h3 Вітаємо!
+                        p
+                            block greeting
+                                if info.greeting
+                                    | #{info.greeting}
+                                else
+                                    | Вітання на сайті Корделівської СЗШ!
+                    .col-md-6.slide-bottom-grid
+                        h3 Наша місія
+                        p
+                            block mission
+                                if info.mission
+                                    | #{info.mission}
+                                else
+                                    | Вчимо дітей
+                    .clearfix
+        // services
+        .service-section
+            .col-md-7.service-section-grids
+                .container
+                    .serve-head
+                        h3 Наші заняття
+                        h6 Кращі можливості для Ваших дітей
+                .service-grid
+                    for activity in activities
+                        .service-section-grid
+                            .icon
+                                i(class="#{activity.icon}")
+                            .icon-text
+                                h4 #{activity.name}
+                                p #{activity.text}
+                            .clearfix
+                    .clearfix
+            .col-md-5.service-text
+                p
+            .clearfix
+        // news-section
+        .news-section
+            .container
+                .news-head
+                    h3 Останні новини
+                    p Слідкуйте за нашими найбільш важливими новинами
+                .news
+                    for article, i in articles
+                        .col-md-4.test-right01.test1
+                            img(src="/images/n#{article.id}.jpg", alt="").img-responsive
+                            .textbox.textbox1
+                                h4.col-md-4.date
+                                    span #{article.getDate().get(calendar.DAY_OF_MONTH)}
+                                    br
+                                    span #{dateFormat.format(article.getDate().getTime())}
+                                    br
+                                    lable
+                                        | #{article.comments.size()}
+                                        img(src="/images/comment.png", alt="").img-responsive
+                                p.col-md-8.news #{article.getCaption()}
+                                .clearfix
+                    .clearfix
+        // culture-section
+        .culture-section
+            .container
+                .culture-head
+                    h3 Наші події
+                    p Не пропустіть:
+                .culture
+                    for event in events
+                        .col-md-6.culture-grids
+                            a(href="/events/#{event.id}")
+                                img(src="/images/event#{event.id}.jpg", alt="#{event.caption}").img-responsive
+                            .e_date
+                                h4 #{event.getDate().get(calendar.DAY_OF_MONTH)}
+                                    br
+                                    span #{dateFormat.format(event.getDate().getTime())}
+                            a(href="/events/#{event.id}")
+                                h5 #{event.caption}
+                            p #{event.text}
+                    .clearfix
+        // footer
+        .mid-bg
+            .container
+                .mid-section
+                    h3 Перший день у школі!
+                    h4 ТИ ГОТОВИЙ?
+                    p
+                        if info.motivation
+                            | #{info.motivation}
+                        else
+                            | Ми на тебе чекаємо!
+        // address
+        #contact.address
+            .col-md-7.address-left
+                .products
+                    h3 Методичні об'єднання
+                    ul
+                        for met in mets
+                            li
+                                a(href="/methods/#{met.id}") #{met.name}
+                .company-adout
+                    h3 Інформація
+                    ul
+                        li
+                            a(href="/about") Про нас
+                        li
+                            a(href="/teachers") Вчителі
+                        li
+                            a(href="/contact") Контакти
+                .clearfix
+                p
+                    if info.slogan
+                        | #{info.slogan}
+                    else
+                        | Якийсь розумний вислів про навчання
+            .col-md-5.address-right
+                h3 Наша адреса
+                p #{info.street}
+                p #{info.phone}
+                p
+                    a.mail(href="mailto:#{address.email}") #{info.email}
+            .clearfix
+        .footer
+            .container
+                .copy
+                    p &copy; 2016 Всі права зхищено. Developed by
+                        a(href="http://github.com/uakruk") Yaroslav Kruk and Goroch Alexandr
+        // start smoth scrolling
+        script(src="/js/general.js")
+        a#toTop.scroll(href="#home", style="display: block;")
+            span#toTopHover(style="opacity: 1;")
+
