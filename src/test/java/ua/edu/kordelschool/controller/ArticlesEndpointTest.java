@@ -16,16 +16,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.edu.kordelschool.KodreslchoolApplication;
-import ua.edu.kordelschool.entity.Article;
-import ua.edu.kordelschool.entity.Attachment;
-import ua.edu.kordelschool.entity.AttachmentType;
+import ua.edu.kordelschool.dto.ArticleDto;
+import ua.edu.kordelschool.dto.AttachmentDto;
+import ua.edu.kordelschool.dto.CommentDto;
+import ua.edu.kordelschool.entity.*;
 import ua.edu.kordelschool.service.ArticleService;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
+import java.util.*;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -45,6 +44,8 @@ public class ArticlesEndpointTest {
     private MockMvc mockMvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    private ArticleDto articleDto;
 
     @Autowired
     private ArticleService articleService;
@@ -67,20 +68,40 @@ public class ArticlesEndpointTest {
     @Before
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+//        articleDto = new ArticleDto();
+//        articleDto.setType(ArticleType.ARTICLE.toString());
+//        articleDto.setCaption("caption added");
+//        articleDto.setAuthor("author added");
+//        articleDto.setText("text added");
+//        articleDto.setId(1L);
+//        List<AttachmentDto> attachments = new ArrayList<>();
+//        AttachmentDto attachmentDto = new AttachmentDto("someAdded.img", AttachmentType.IMAGE.name());
+//        attachments.add(attachmentDto);
+//        articleDto.setAttachments(attachments);
+//        articleService.createArticle(articleDto);
     }
 
     @Test
     public void createArticleTest() throws Exception {
-        Article article = new Article();
+        ArticleDto article = new ArticleDto();
+        article.setType(ArticleType.ARTICLE.toString());
         article.setCaption("caption");
         article.setAuthor("author");
         article.setText("text");
-        article.setId(0L);
-        article.setDate(new GregorianCalendar());
-        HashSet<Attachment> attachments = new HashSet<>();
-        Attachment attachment = new Attachment("someGoogle.img", AttachmentType.IMAGE);
-        attachment.setId(0L);
+        LinkedList<AttachmentDto> attachments = new LinkedList<>();
+        AttachmentDto attachment = new AttachmentDto("someGoogle.img", AttachmentType.IMAGE.name());
         attachments.add(attachment);
+
+        List<CommentDto> comments = new ArrayList<>();
+
+        CommentDto comment = new CommentDto();
+        comment.setAuthor("admin");
+        comment.setText("text");
+
+        comments.add(comment);
+
+        article.setComments(comments);
         article.setAttachments(attachments);
         String articleJson = json(article);
 
@@ -88,11 +109,6 @@ public class ArticlesEndpointTest {
                 .contentType(contentType)
                 .content(articleJson))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    public void editArticleTest() {
-
     }
 
     protected String json(Object o) throws IOException {

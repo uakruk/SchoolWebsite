@@ -5,8 +5,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.kordelschool.dto.ArticleDto;
+import ua.edu.kordelschool.dto.AttachmentDto;
 import ua.edu.kordelschool.entity.Article;
+import ua.edu.kordelschool.entity.Attachment;
 import ua.edu.kordelschool.service.ArticleService;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Yaroslav Kruk on 12/11/16.

@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.edu.kordelschool.dao.ArticleDao;
 import ua.edu.kordelschool.dto.ArticleDto;
 import ua.edu.kordelschool.dto.AttachmentDto;
-import ua.edu.kordelschool.entity.Article;
-import ua.edu.kordelschool.entity.ArticleType;
-import ua.edu.kordelschool.entity.Attachment;
-import ua.edu.kordelschool.entity.AttachmentType;
+import ua.edu.kordelschool.entity.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -42,9 +39,14 @@ public class ArticleService {
         Set<Attachment> attachments = new HashSet<>();
         article.setAttachments(attachments);
 
+        List<Comment> comments = new ArrayList<>();
+        article.setComments(comments);
+
         articleDto.getAttachments().stream()
                 .map(a -> attachments.add(new Attachment(a.getUri(),
                         AttachmentType.valueOf(a.getType()))));
+        articleDto.getComments().stream()
+                .map(c -> comments.add(new Comment(c.getAuthor(), c.getText())));
 
         Article response = articleDao.create(article);
 
