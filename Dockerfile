@@ -7,4 +7,4 @@ ADD . /usr/src/app
 
 EXPOSE 8080
 
-CMD mvn install; mvn exec:java
+CMD mvn install;
