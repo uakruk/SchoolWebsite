@@ -6,7 +6,7 @@ services:
       - "1234:5432"
     environment:
       - POSTGRES_USER=director
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=kordsch
       - POSTGRES_PASSWORD=minfin
   web:
     build: .
