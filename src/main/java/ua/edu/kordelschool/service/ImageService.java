@@ -21,12 +21,14 @@ import java.io.*;
 @Service
 public class ImageService {
 
+    private static long time = System.currentTimeMillis();
+
     @Autowired
     private ImagesUploadProperties imagesUploadProperties;
 
     @Retryable(maxAttempts = 10, value= IOException.class, backoff = @Backoff(multiplier = 2, delay = 200))
     public String uploadStaticImage(MultipartFile image) throws IOException {
-        System.err.println("Called method for backoff");
+        System.err.println("Called method for backoff - " + (System.currentTimeMillis() - time));
 
 
         if (!image.isEmpty()) {
