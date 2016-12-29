@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import java.io.IOException;
  * @since 1.8
  */
 @Configuration
+@EnableRetry
 @ComponentScan(value = {"ua.edu.kordelschool"},
                 basePackageClasses = {KodreslchoolApplication.class},
                 excludeFilters = @ComponentScan.Filter({

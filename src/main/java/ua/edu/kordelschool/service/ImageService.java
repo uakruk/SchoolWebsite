@@ -3,6 +3,8 @@ package ua.edu.kordelschool.service;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.edu.kordelschool.config.ImagesUploadProperties;
@@ -22,7 +24,10 @@ public class ImageService {
     @Autowired
     private ImagesUploadProperties imagesUploadProperties;
 
+    @Retryable(maxAttempts = 10, value= IOException.class, backoff = @Backoff(multiplier = 2, delay = 200))
     public String uploadStaticImage(MultipartFile image) throws IOException {
+        System.err.println("Called method for backoff");
+
 
         if (!image.isEmpty()) {
             String fileExtension = getFileExtension(image.getOriginalFilename());
@@ -37,12 +42,14 @@ public class ImageService {
         return getDefaultFilePath();
     }
 
+    @Retryable(maxAttempts = 10, value= IOException.class, backoff = @Backoff(multiplier = 2, delay = 200))
     public String getDefaultFilePath() throws IOException {
         String filename = imagesUploadProperties.getDefaultArticleImage().getURI().getPath();
 
         return filename.substring(filename.indexOf("/static/") + "/static".length());
     }
 
+    @Retryable(maxAttempts = 10, value= IOException.class, backoff = @Backoff(multiplier = 2, delay = 200))
     public String uploadEncodedImage(MultipartFile image) throws IOException {
         if (!image.isEmpty()) {
             String fileExtension = "data:image/" + getFileExtension(image.getOriginalFilename()) + ";base64," ;
