@@ -16,9 +16,3 @@ services:
       - ./build:/usr/src/app/target
     links:
       - db
-elk:
-  image: sebp/elk
-  ports:
-    - "5602:5601"
-    - "9201:9200"
-    - "5045:5044"
