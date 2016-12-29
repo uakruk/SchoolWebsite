@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.*;
 import ua.edu.kordelschool.entity.Activity;
 import ua.edu.kordelschool.entity.Article;
 import ua.edu.kordelschool.entity.ArticleType;
+import ua.edu.kordelschool.entity.MethodGroup;
 
 import javax.transaction.Transactional;
 import java.util.Calendar;
@@ -26,9 +27,17 @@ public class DaoTests {
     @Autowired
     private ArticleDao articleDao;
 
-    private Activity activity;
+    @Autowired
+    private MethodGroupDao methodGroupDao;
 
+    private Activity activity;
     private Article article;
+    private MethodGroup methodGroup;
+
+    private void createMethodGroup() {
+        methodGroup = new MethodGroup();
+        
+    }
 
     private void createArticle() {
         article = new Article();
@@ -84,6 +93,33 @@ public class DaoTests {
     @Rollback
     @Transactional
     public void testArticlesCRUD() {
+        // create
+        Article response = articleDao.create(article);
+
+        assertThat(response.getType()).isEqualTo(ArticleType.ARTICLE);
+
+        assertThat(response.getId()).isNotNull();
+        assertThat(response.getId()).isEqualTo(article.getId());
+        // read
+        response = articleDao.read(article.getId());
+
+        assertThat(response).isNotNull();
+        assertThat(response).isEqualTo(article);
+
+        //update
+        article.setType(ArticleType.EVENT);
+        response = articleDao.update(article);
+        assertThat(response.getType()).isEqualTo(ArticleType.EVENT);
+
+        //delete
+        articleDao.delete(article.getId());
+        assertThat(articleDao.read(article.getId())).isNull();
+    }
+
+    @Test
+    @Rollback
+    @Transactional
+    public void testMethodGroupsCRUD() {
         // create
         Article response = articleDao.create(article);
 
