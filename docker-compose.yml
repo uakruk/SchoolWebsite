@@ -10,8 +10,6 @@ services:
       - POSTGRES_PASSWORD=minfin
   web:
     build: .
-    ports:
-      - "8082:8080"
     volumes:
       - ./build:/usr/src/app/target
     links:

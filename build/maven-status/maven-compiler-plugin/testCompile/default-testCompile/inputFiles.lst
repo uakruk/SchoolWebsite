@@ -1,2 +1,3 @@
 /usr/src/app/src/test/java/ua/edu/kordelschool/KodreslchoolApplicationTests.java
 /usr/src/app/src/test/java/ua/edu/kordelschool/controller/ArticlesEndpointTest.java
+/usr/src/app/src/test/java/ua/edu/kordelschool/dao/DaoTests.java

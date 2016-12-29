@@ -1,5 +1,6 @@
 .idea/
 target/
+git_project/
 *.iml
 
 *.class

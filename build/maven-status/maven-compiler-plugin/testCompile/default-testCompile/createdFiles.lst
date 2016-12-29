@@ -1,2 +1,3 @@
 ua/edu/kordelschool/KodreslchoolApplicationTests.class
 ua/edu/kordelschool/controller/ArticlesEndpointTest.class
+ua/edu/kordelschool/dao/DaoTests.class

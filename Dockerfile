@@ -1,5 +1,5 @@
 FROM maven:3-jdk-8
-RUN mkdir -p ./target
+RUN mkdir -p /usr/src/app/target
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 

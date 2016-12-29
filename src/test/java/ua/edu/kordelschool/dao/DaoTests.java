@@ -36,7 +36,8 @@ public class DaoTests {
 
     private void createMethodGroup() {
         methodGroup = new MethodGroup();
-        
+        methodGroup.setName("group");
+        methodGroup.setDescription("-_-_-");
     }
 
     private void createArticle() {
@@ -59,6 +60,7 @@ public class DaoTests {
     public void setUp() {
         createActivity();
         createArticle();
+        createMethodGroup();
     }
 
     @Test
@@ -121,25 +123,23 @@ public class DaoTests {
     @Transactional
     public void testMethodGroupsCRUD() {
         // create
-        Article response = articleDao.create(article);
-
-        assertThat(response.getType()).isEqualTo(ArticleType.ARTICLE);
+        MethodGroup response = methodGroupDao.create(methodGroup);
 
         assertThat(response.getId()).isNotNull();
-        assertThat(response.getId()).isEqualTo(article.getId());
+        assertThat(response.getId()).isEqualTo(methodGroup.getId());
         // read
-        response = articleDao.read(article.getId());
+        response = methodGroupDao.read(methodGroup.getId());
 
         assertThat(response).isNotNull();
-        assertThat(response).isEqualTo(article);
+        assertThat(response).isEqualTo(methodGroup);
 
         //update
-        article.setType(ArticleType.EVENT);
-        response = articleDao.update(article);
-        assertThat(response.getType()).isEqualTo(ArticleType.EVENT);
+        methodGroup.setDescription("+");
+        response = methodGroupDao.update(methodGroup);
+        assertThat(response.getDescription()).isEqualTo("+");
 
         //delete
-        articleDao.delete(article.getId());
-        assertThat(articleDao.read(article.getId())).isNull();
+        methodGroupDao.delete(methodGroup.getId());
+        assertThat(methodGroupDao.read(methodGroup.getId())).isNull();
     }
 }
