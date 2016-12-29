@@ -119,7 +119,7 @@ html
                     .news
                         for article, i in articles
                             .col-md-4.test-right01.test1
-                                img(src="/images/n#{article.id}.jpg", alt="").img-responsive
+                                img(src="#{article.getAttachments().iterator().next().getAttachmentPath()}", alt="").img-responsive
                                 .textbox.textbox1
                                     h4.col-md-4.date
                                         span #{article.getDate().get(calendar.DAY_OF_MONTH)}

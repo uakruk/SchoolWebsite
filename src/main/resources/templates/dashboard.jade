@@ -137,6 +137,43 @@ html
 
                     .row
                         block content
+                            .col-lg-12
+                                .panel.panel-default
+                                    .panel-heading Керування контентом головної сторінки
+                                    .panel-body
+                                        .row
+                                            .col-lg-6
+                                                .panel.panel-default
+                                                    .panel-heading Новини
+                                                    .panel-body
+                                                        form#arform(role="form")
+                                                            .form-group
+                                                                label Заголовок
+                                                                input.form-control(name="caption")
+                                                                p.help-block Введіть заголовок новини
+                                                            .form-group
+                                                                label Автор
+                                                                input.form-control(name="author")
+                                                                p.help-block Введіть автора
+                                                            .form-group
+                                                                label Текст
+                                                                textarea.form-control(rows="4", placeholder="Введіть текст новини", name="text")
+                                                            .form-group
+                                                                label Зображення
+                                                                input(type="file", accept="*.jpg", name="file")
+                                                            input.btn.btn-default(type="submit") Додати на сайт
+                                                        #oldart
+                                                            for article in articles
+                                                                .well
+                                                                    p #{article.getDate().get(calendar.DAY_OF_MONTH)} #{dateFormat.format(article.getDate().getTime())}
+                                                                    .well: img(src="#{article.getAttachments().iterator().next().getAttachmentPath()}").img-responsive
+                                                                    .well
+                                                                        h4 #{article.caption}
+                                                                    .well
+                                                                        p #{article.text}
+                                                                    .well
+                                                                        h5 #{article.author}
+
         // jQuery
         script(src="/vendor/jquery/jquery.min.js")
 
@@ -148,3 +185,6 @@ html
 
         // Custom theme JavaScript
         script(src="/dist/js/sb-admin-2.js")
+
+        // image upload
+        script(src="/js/image-upload.js")

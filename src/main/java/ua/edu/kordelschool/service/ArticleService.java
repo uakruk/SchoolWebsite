@@ -42,9 +42,14 @@ public class ArticleService {
         List<Comment> comments = new ArrayList<>();
         article.setComments(comments);
 
-        articleDto.getAttachments().stream()
-                .map(a -> attachments.add(new Attachment(a.getUri(),
-                        AttachmentType.valueOf(a.getType()))));
+        for (AttachmentDto a : articleDto.getAttachments()) {
+            attachments.add(new Attachment(a.getUri(), AttachmentType.valueOf(a.getType())));
+        }
+
+//        articleDto.getAttachments().stream()
+//                .map(a -> attachments.add(new Attachment(a.getUri(),
+//                        AttachmentType.valueOf(a.getType()))));
+        System.err.println(articleDto.getAttachments());
         articleDto.getComments().stream()
                 .map(c -> comments.add(new Comment(c.getAuthor(), c.getText())));
 
