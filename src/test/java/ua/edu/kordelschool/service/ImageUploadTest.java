@@ -12,12 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 import ua.edu.kordelschool.config.ImagesUploadProperties;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
+import java.util.concurrent.TimeUnit;
 
 import static org.mockito.BDDMockito.*;
 import static org.assertj.core.api.Assertions.*;
@@ -39,14 +38,25 @@ public class ImageUploadTest {
     @Autowired
     private ImageService imageService;
 
-    private MultipartFile multipartFile;
+    private volatile MultipartFile multipartFile;
+
+    private volatile InputStream saved;
 
     @Before
     public void setUp() throws IOException, URISyntaxException {
 
         multipartFile = mock(MultipartFile.class);
         when(multipartFile.getOriginalFilename()).thenReturn("someimage.jpg");
-        when(multipartFile.getInputStream()).thenReturn(new FileInputStream(new ClassPathResource("static/images/article_default.jpg").getFile()));
+        when(multipartFile.getInputStream()).thenReturn(new FileInputStream(new ClassPathResource("static/images/article_default.jpg").getFile()))
+                                            .thenThrow(new IOException())
+                                            .thenThrow(new IOException())
+                                            .thenThrow(new IOException())
+                                            .thenThrow(new IOException())
+                                            .thenThrow(new IOException())
+                .thenReturn(new FileInputStream(new ClassPathResource("static/images/article_default.jpg").getFile()));
+
+      //  DemonThread dt = new DemonThread(multipartFile);
+      //  dt.start();
     }
 
     @Test
@@ -67,5 +77,68 @@ public class ImageUploadTest {
         System.out.println(response);
 
         assertThat(response).isEqualTo(imageService.getDefaultFilePath());
+    }
+
+    @Test
+    public void testBackoffDelay() throws IOException, InterruptedException {
+        InputStream in = multipartFile.getInputStream();
+
+
+        System.err.println(" -- Try to write open an input stream");
+
+        String response = imageService.uploadStaticImage(multipartFile);
+
+
+    }
+
+    private InputStream exceptionPodvaliator() {
+        InputStream resp = null;
+        try {
+            resp = multipartFile.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        saved = resp;
+        return resp;
+    }
+
+    private void doBad() {
+        try {
+            when(multipartFile.getInputStream()).thenThrow(new IOException());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void doGood() {
+        try {
+            when(multipartFile.getInputStream()).thenReturn(saved);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class DemonThread extends Thread {
+
+        private volatile MultipartFile file;
+
+        public DemonThread(MultipartFile file) {
+            this.file = file;
+        }
+
+        public void run() {
+            InputStream in = exceptionPodvaliator();
+            try {
+                TimeUnit.MILLISECONDS.sleep(10);
+                doBad();
+                TimeUnit.SECONDS.sleep(2);
+                doGood();
+                System.err.println("Restored input stream");
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }
