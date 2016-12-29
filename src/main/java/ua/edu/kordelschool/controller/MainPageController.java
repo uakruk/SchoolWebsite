@@ -25,7 +25,6 @@ import java.util.Locale;
  * @version 1.0
  * @since 1.8
  */
-@PropertySource("information.properties")
 @Controller
 public class MainPageController {
 

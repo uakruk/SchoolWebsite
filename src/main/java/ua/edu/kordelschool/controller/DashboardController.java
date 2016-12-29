@@ -36,6 +36,8 @@ public class DashboardController {
         List<Motto> slogans = mottoService.getMottos();
         model.addAttribute("slogans", slogans);
 
+        model.addAttribute("title", "Головна");
+
         return "dashboard";
     }
 }

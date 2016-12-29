@@ -31,12 +31,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("myUserDetailsService")
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private RESTAuthenticationSuccessHandler successHandler;
+
+    @Autowired
+    private RESTAuthenticationFailureHandler failureHandler;
+
     private final static String[] PERMITTED_ALL = {
-            "/**"
+            "/"
     };
 
     private final static String[] PERMITTED_AUTHENTICATED = {
-            "/dashboard/**"
+            "/dashboard/**",
+            "/dashboard"
     };
 
     private final static String[] PERMITTED_ACTIVE = {
@@ -50,21 +57,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(PERMITTED_ALL).permitAll()
 //                .antMatchers(PERMITTED_ACTIVE).hasRole("USER")
-//                .antMatchers(PERMITTED_AUTHENTICATED).hasRole("ADMIN") //todo rename array names
-//                .and()
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .loginProcessingUrl("appLogin")
-//                .usernameParameter("email")
-//                .passwordParameter("password")
-//                .and()
+                .antMatchers(PERMITTED_AUTHENTICATED).authenticated()//todo rename array names
+                .and()
+               .formLogin()
+                .loginPage("/login").permitAll()
+                .loginProcessingUrl("/login")
+                .successHandler(successHandler)
+                .failureHandler(failureHandler)
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .and()
 //                .exceptionHandling()
 //                .accessDeniedPage("/404")
 //                .accessDeniedHandler(((httpServletRequest, httpServletResponse, e) -> httpServletResponse.sendRedirect("/404")))
 //                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/")
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .and()
                 .csrf().disable();
     }
