@@ -9,4 +9,4 @@ ADD . /usr/src/app
 
 EXPOSE 8080
 
-#CMD ["mvn", "exec:java"]
+CMD ["mvn", "exec:java"]
