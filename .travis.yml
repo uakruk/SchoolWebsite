@@ -1,12 +1,13 @@
-sudo: required
 language: java
 jdk:
   - oraclejdk8
+sudo: required
 services:
     - docker
 addons:
   apt:
     packages:
       - oracle-java8-installer
-script: mvn pmd:check
-sudo docker-compose up
+script:
+  - mvn pmd:check
+  - sudo docker-compose up
