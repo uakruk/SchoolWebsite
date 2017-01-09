@@ -34,6 +34,8 @@ public class Attachment {
         this.type = type;
     }
 
+    public Attachment() {}
+
     public Long getId() {
         return id;
     }

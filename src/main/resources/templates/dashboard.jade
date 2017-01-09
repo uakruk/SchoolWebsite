@@ -1,0 +1,190 @@
+// Created by uakruk on 12/26/16.
+html
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        meta(name="description", content="Kordelivka school website")
+        meta(name="author", content="Yaroslav Kruk")
+
+        title
+            block title
+                if title
+                    | #{title} -
+                | Корделівська СЗШ
+
+        // bootstrap core css
+        link(rel="stylesheet", href="/vendor/bootstrap/css/bootstrap.min.css")
+
+        // MetisMenu css
+        link(rel="stylesheet", href="/vendor/metisMenu/metisMenu.min.css")
+
+        // custom css
+        link(rel="stylesheet", href="/dist/css/sb-admin-2.css")
+
+        // custom fonts
+        link(rel="stylesheet", href="/vendor/font-awesome/css/font-awesome.min.css", type="text/css")
+
+        // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+        // [if lt IE 9]
+            script(src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
+            script(src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
+        // [endif]
+    body
+        block body
+            #wrapper
+                // navigation
+                nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0;")
+                    .navbar-header
+                        button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+                            span.sr-only Показати/сховати меню
+                            span.icon-bar
+                            span.icon-bar
+                            sapn.icon-bar
+                        a.navbar-brand(href="/") Мій кабінет
+
+                    ul.nav.navbar-top-links.navbar-right
+                        // messages
+                        li.dropdown
+                            a.dropdown-toggle(data-toggle="dropdown", href="#")
+                                i.fa.fa-envelope.fa-fw
+                                i.fa.fa-caret-down
+                            ul.dropdown-menu.dropdown-messages
+                                block messages-top
+                                    li
+                                        a(href="#")
+                                            div
+                                                strong John Smith
+                                                span.pull-right.text-muted
+                                                    em Yesterday
+                                            div
+                                                | message text goes here...
+                                    li.divider
+                                // end of list of messages
+                                li
+                                    a.text-center(href="#")
+                                        strong Переглянути всі повідомлення
+                                        i.fa.fa-angle-right
+                        // tasks
+                        li.dropdown
+                            a.dropdown-toggle(data-toggle="dropdown", href="#")
+                                i.fa.fa-tasks.fa-fw
+                                i.fa.fa-caret-down
+                            ul.dropdown-menu.dropdown-tasks
+                                block tasks-top
+                                    li
+                                        a(href="#")
+                                            div
+                                                p
+                                                    strong Task 1
+                                                    span.pull-right.text-muted 40% Complete
+                                                .progress.progress-striped.active
+                                                    .progress-bar.progress-bar-success(role="progressbar", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width: 40%")
+                                                        span.sr-only 40% complete (success)
+                                    li.divider
+                                li
+                                    a.text-center(href="#")
+                                        strong Переглянути всі завдання
+                                        i.fa.fa-angle-right
+                        // alerts (notifications)
+                        li.dropdown
+                            a.dropdown-toggle(data-toggle="dropdown", href="#")
+                                i.fa.fa-bell.fa-fw
+                                i.fa.fa-caret-down
+                            ul.dropdown-menu.dropdown-alerts
+                                block alerts-top
+                                    li
+                                        a(href="#")
+                                            div
+                                                i.fa.fa-comment.fa-fw New Comment
+                                                span.pull-right.text-muted.small 4 minutes ago
+                                    li.divider
+                                li
+                                    a.text-center(href="#")
+                                        strong Переглянути всі нотифікації
+                                        i.fa.fa-angle-right
+                        // profile settings
+                        li.dropdown
+                            a.dropdown-toggle(data-toggle="dropdown", href="#")
+                                i.fa.fa-user.fa-fw
+                                i.fa.fa-caret-down
+                            ul.dropdown-menu.dropdown-user
+                                li
+                                    a(href="/profile")
+                                        i.fa.fa-user.fa-fw
+                                        | Профіль
+                                li
+                                    a(href="/settings")
+                                        i.fa.fa-gear.fa-fw
+                                        | Налаштування
+                                li.divider
+                                li
+                                    a(href="/logout")
+                                        i.fa.fa-sign-out.fa-fw
+                                        | Вийти
+                    // side-menu
+                    include fragments/side-menu
+
+                // page content
+                #page-wrapper
+                    .container-fluid
+                        .row
+                            .col-lg-12
+                                h1.page-header
+                                    if title
+                                        | #{title}
+                                    | - Кабінет
+
+                    .row
+                        block content
+                            .col-lg-12
+                                .panel.panel-default
+                                    .panel-heading Керування контентом головної сторінки
+                                    .panel-body
+                                        .row
+                                            .col-lg-6
+                                                .panel.panel-default
+                                                    .panel-heading Новини
+                                                    .panel-body
+                                                        form#arform(role="form")
+                                                            .form-group
+                                                                label Заголовок
+                                                                input.form-control(name="caption")
+                                                                p.help-block Введіть заголовок новини
+                                                            .form-group
+                                                                label Автор
+                                                                input.form-control(name="author")
+                                                                p.help-block Введіть автора
+                                                            .form-group
+                                                                label Текст
+                                                                textarea.form-control(rows="4", placeholder="Введіть текст новини", name="text")
+                                                            .form-group
+                                                                label Зображення
+                                                                input(type="file", accept="*.jpg", name="file")
+                                                            input.btn.btn-default(type="submit") Додати на сайт
+                                                        #oldart
+                                                            for article in articles
+                                                                .well
+                                                                    p #{article.getDate().get(calendar.DAY_OF_MONTH)} #{dateFormat.format(article.getDate().getTime())}
+                                                                    .well: img(src="#{article.getAttachments().iterator().next().getAttachmentPath()}").img-responsive
+                                                                    .well
+                                                                        h4 #{article.caption}
+                                                                    .well
+                                                                        p #{article.text}
+                                                                    .well
+                                                                        h5 #{article.author}
+
+        // jQuery
+        script(src="/vendor/jquery/jquery.min.js")
+
+        // Bootstrap Core JavaScript
+        script(src="/vendor/bootstrap/js/bootstrap.min.js")
+
+        // Metis Menu Plugin JavaScript
+        script(src="/vendor/metisMenu/metisMenu.min.js")
+
+        // Custom theme JavaScript
+        script(src="/dist/js/sb-admin-2.js")
+
+        // image upload
+        script(src="/js/image-upload.js")

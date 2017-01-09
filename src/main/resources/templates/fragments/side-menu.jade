@@ -1,0 +1,57 @@
+// Created by uakruk on 12/28/16.
+.navbar-default.sidebar(role="navigation")
+    .sidebar-nav.navbar-collapse
+        ul.nav#side-menu
+            li.sidebar-search
+                // need this?
+                .input-group.custom-search-form
+                    input.form-control(type="text", placeholder="Пошук...")
+                    span.input-group-btn
+                        button.btn.btn-default(type="button")
+                            i.fa.fa-search
+            block side-menu
+                if sec.isAuthenticated()
+                    li.active
+                        a(href="/")
+                            i.fa.fa-dashboard.fa-fw
+                            |   Кабінет
+                    //li
+                        a(href="/diary")
+                            i.fa.fa-calendar.fa-fw
+                            |  Щоденник
+                    //
+                        span.fa.arrow
+                        ul.nav.nav-second-level
+                            li
+                                a(href="/tasks") Завдання
+                            li
+                    if sec.isStudent()
+                        li
+                            a(href="/tasks")
+                                i.fa.fa-tasks.fa-fw
+                                |  Завдання
+                        li
+                            a(href="/friends")
+                                i.fa.fa-male.fa-fw(style="display: inline;")
+                                i.fa.fa-female.fa-fw(style="display: inline; ")
+                                | Однокласники
+                    if sec.isTeacher()
+                        li
+                            a(href="/class")
+                                i.fa.fa-male.fa-fw(style="display: inline;")
+                                i.fa.fa-female.fa-fw(style="display: inline;")
+                                | Класи
+
+                    li
+                        a(href="/teachers")
+                            span.glyphicon.glyphicon-education
+                            |  Вчителі
+                    li
+                        a(href="/messages")
+                            i.fa.fa-envelope-o.fa-fw
+                            |  Повідомлення
+                    if sec.isAdmin()
+                        li
+                            a(href="/general-settings")
+                                i.fa.fa-gears.fa-fw
+                            | Керування контентом сайту

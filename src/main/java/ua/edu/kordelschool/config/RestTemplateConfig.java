@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +24,7 @@ public class RestTemplateConfig {
     public RestTemplate restTemplate(ClientHttpRequestFactory httpRequestFactory) {
         RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
         return restTemplate;
     }

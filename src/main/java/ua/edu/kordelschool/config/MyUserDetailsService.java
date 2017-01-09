@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ua.edu.kordelschool.service.UserService;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,10 +26,13 @@ import java.util.List;
 @Service("myUserDetailsService")
 public class MyUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    private UserService userService;
+
     @SuppressWarnings("unchecked")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String user = "admin";
+        ua.edu.kordelschool.entity.User user = userService.readByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
@@ -37,13 +41,13 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @SuppressWarnings("unchecked")
-    public UserDetails userToUserDetails(String user) {
+    public UserDetails userToUserDetails(ua.edu.kordelschool.entity.User user) {
 
         List<GrantedAuthority> authorities = (List<GrantedAuthority>) getAuthorities(user);
         return createUser(user, authorities);
     }
 
-    public void signin(String user) {
+    public void signin(ua.edu.kordelschool.entity.User user) {
 
         if (user != null) {
 
@@ -53,13 +57,13 @@ public class MyUserDetailsService implements UserDetailsService {
         }
     }
 
-    private User createUser(String user, List<GrantedAuthority> authorities) {
+    private User createUser(ua.edu.kordelschool.entity.User user, List<GrantedAuthority> authorities) {
 
-        return new User("admin", "admin", authorities);
+        return new User(user.getEmail(), user.getPassword(), authorities);
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(String user) {
-        String[] roles = {"admin"};
+    private Collection<? extends GrantedAuthority> getAuthorities(ua.edu.kordelschool.entity.User user) {
+        String[] roles = user.getRoles().stream().map(role -> role.name()).toArray(String[]::new);
         return AuthorityUtils.createAuthorityList(roles);
     }
 }
