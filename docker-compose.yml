@@ -8,9 +8,50 @@ services:
       - POSTGRES_USER=director
       - POSTGRES_DB=kordsch
       - POSTGRES_PASSWORD=minfin
-  web:
+  web-build:
     build: .
     volumes:
-      - ./build:/usr/src/app/target
+      - ./target:/usr/src/app/target
     links:
       - db
+      - logstash
+    environment:
+      - ACTION=build
+
+  web-run:
+    build: .
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./target:/usr/src/app/target
+    links:
+      - db
+      - logstash
+      - kibana
+    environment:
+      - ACTION=run
+
+  elasticsearch:
+    image: elasticsearch
+    expose:
+     - "9200"
+     - "9300"
+
+  logstash:
+    image: logstash
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+     - ./logstash_conf:/etc/logstash/conf.d
+    expose:
+     - "5000"
+    links:
+     - elasticsearch
+
+  kibana:
+    image: kibana
+    environment:
+       - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+     - "5602:5601"
+    links:
+     - elasticsearch
