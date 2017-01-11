@@ -11,6 +11,7 @@ import ua.edu.kordelschool.dto.LoginDto;
 import ua.edu.kordelschool.dto.UserDto;
 import ua.edu.kordelschool.entity.User;
 import ua.edu.kordelschool.service.UserService;
+import ua.edu.kordelschool.utils.ElasticSearchUtil;
 
 /**
  * @author Yaroslav Kruk on 12/28/16.
@@ -30,6 +31,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String loginForm() {
+        ElasticSearchUtil.indexEvent("login", "user is trying to login");
         return "fragments/login";
     }
 
@@ -42,6 +44,7 @@ public class AuthenticationController {
 
     @RequestMapping(value="/register", method = RequestMethod.GET)
     public String register() {
+        ElasticSearchUtil.indexEvent("register", "user is trying to register");
         return "register";
     }
 

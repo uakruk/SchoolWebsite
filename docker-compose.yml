@@ -11,31 +11,28 @@ services:
   web-build:
     build: .
     volumes:
-      - ./target:/usr/src/app/target
+      - ./build:/usr/src/app/target
     links:
       - db
-      - logstash
     environment:
       - ACTION=build
 
   web-run:
     build: .
+    volumes:
+      - ./build:/usr/src/app/target
     ports:
       - "8081:8080"
-    volumes:
-      - ./target:/usr/src/app/target
     links:
       - db
-      - logstash
-      - kibana
     environment:
       - ACTION=run
 
   elasticsearch:
     image: elasticsearch
-    expose:
-     - "9200"
-     - "9300"
+    ports:
+     - "9201:9200"
+     - "9301:9300"
 
   logstash:
     image: logstash
@@ -53,5 +50,3 @@ services:
        - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
      - "5602:5601"
-    links:
-     - elasticsearch
