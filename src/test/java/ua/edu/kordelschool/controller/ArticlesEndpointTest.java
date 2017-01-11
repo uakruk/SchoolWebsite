@@ -34,7 +34,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = KodreslchoolApplication.class)
-@WebAppConfiguration
 public class ArticlesEndpointTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),

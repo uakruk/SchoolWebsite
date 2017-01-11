@@ -10,4 +10,4 @@ addons:
       - oracle-java8-installer
 script:
   - mvn pmd:check
-  - sudo docker-compose up --abort-on-container-exit
+  - sudo docker-compose up --abort-on-container-exit web-build
